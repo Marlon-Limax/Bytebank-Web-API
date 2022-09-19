@@ -11,20 +11,48 @@ class Dashboard extends StatelessWidget {
         title: const Text('Dashboard'),
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('images/bytebank_logo.png'),
-            ),
-            Row(
-              children: const [
-                _FeatureItem('Transfer', Icons.monetization_on),
-                _FeatureItem('Transaction Feed', Icons.description),
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('images/bytebank_logo.png'),
+          ),
+          SizedBox(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _FeatureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onClick: () {
+                    _showContactsList(context);
+                  },
+                ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () => debugPrint('transaction feed was clicked'),
+                ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () => debugPrint('transaction feed was clicked'),
+                ),
               ],
             ),
-          ]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showContactsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ContactList(),
+      ),
     );
   }
 }
@@ -32,8 +60,9 @@ class Dashboard extends StatelessWidget {
 class _FeatureItem extends StatelessWidget {
   final String name;
   final IconData icon;
+  final Function onClick;
 
-  const _FeatureItem(this.name, this.icon);
+  const _FeatureItem(this.name, this.icon, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +71,9 @@ class _FeatureItem extends StatelessWidget {
       child: Material(
         color: Theme.of(context).colorScheme.primary,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ContactList(),
-              ),
-            );
-          },
+          onTap: () => onClick(),
           child: Container(
             padding: const EdgeInsets.all(8.0),
-            height: 100,
             width: 150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
