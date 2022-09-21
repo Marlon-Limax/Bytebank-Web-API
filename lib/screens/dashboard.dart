@@ -27,9 +27,7 @@ class Dashboard extends StatelessWidget {
                 _FeatureItem(
                   'Transfer',
                   Icons.monetization_on,
-                  onClick: () {
-                    _showContactsList(context);
-                  },
+                  onClick: () => _showContactsList(context),
                 ),
                 _FeatureItem(
                   'Transaction Feed',
