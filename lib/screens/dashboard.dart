@@ -1,3 +1,4 @@
+import 'package:bytebankwebapi/http/webclient.dart';
 import 'package:bytebankwebapi/screens/contacts_list.dart';
 import 'package:bytebankwebapi/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +25,14 @@ class Dashboard extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _FeatureItem(
-                  'Transfer',
-                  Icons.monetization_on,
-                  onClick: () => _showContactsList(context),
-                ),
-                _FeatureItem(
-                  'Transaction Feed',
-                  Icons.description,
-                  onClick: () => _showTransactionsList(context),
-                ),
+                _FeatureItem('Transfer', Icons.monetization_on, onClick: () => _showContactsList(context),
+                                   // () async {
+                                  //await findAll();
+                // }
+                    ),
+                _FeatureItem('Transaction Feed', Icons.description,
+                    onClick: () => _showTransactionsList(context), // () {}
+                    ),
               ],
             ),
           ),
@@ -62,7 +61,7 @@ class Dashboard extends StatelessWidget {
 class _FeatureItem extends StatelessWidget {
   final String name;
   final IconData icon;
-  final Function onClick;
+  final Function() onClick;
 
   const _FeatureItem(this.name, this.icon, {required this.onClick});
 
@@ -73,7 +72,7 @@ class _FeatureItem extends StatelessWidget {
       child: Material(
         color: Theme.of(context).colorScheme.primary,
         child: InkWell(
-          onTap: () => onClick(),
+          onTap: () => onClick(),// onClick,
           child: Container(
             padding: const EdgeInsets.all(8.0),
             width: 150,
