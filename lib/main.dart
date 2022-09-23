@@ -1,10 +1,12 @@
-import 'package:bytebankwebapi/http/webclient.dart';
 import 'package:bytebankwebapi/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
+import 'http/webclient.dart';
+
 void main() {
   runApp(const ByteBankApp());
-  findAll();
+  LoggingInterceptor teste = LoggingInterceptor();
+  teste.findAll();
 }
 
 class ByteBankApp extends StatelessWidget {
