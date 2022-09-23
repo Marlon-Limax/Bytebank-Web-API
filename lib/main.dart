@@ -1,3 +1,4 @@
+import 'package:bytebankwebapi/models/transaction.dart';
 import 'package:bytebankwebapi/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,8 @@ import 'http/webclient.dart';
 
 void main() {
   runApp(const ByteBankApp());
-  LoggingInterceptor teste = LoggingInterceptor();
-  teste.findAll();
+  LoggingInterceptor loggingInterceptor = LoggingInterceptor();
+  loggingInterceptor.findAll().then((transactions) => debugPrint('new transactions $transactions'));
 }
 
 class ByteBankApp extends StatelessWidget {
