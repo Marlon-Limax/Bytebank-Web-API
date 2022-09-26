@@ -1,4 +1,3 @@
-import 'package:bytebankwebapi/http/webclient.dart';
 import 'package:bytebankwebapi/screens/contacts_list.dart';
 import 'package:bytebankwebapi/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class Dashboard extends StatelessWidget {
   _showTransactionsList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => TransactionsList(),
+        builder: (context) => const TransactionsList(),
       ),
     );
   }

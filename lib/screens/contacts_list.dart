@@ -29,7 +29,7 @@ class _ContactListState extends State<ContactList> {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Progress();
+              return const Progress();
               // ignore: dead_code
               break;
             case ConnectionState.active:

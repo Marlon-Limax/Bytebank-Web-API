@@ -1,4 +1,3 @@
-import 'package:bytebankwebapi/models/transaction.dart';
 import 'package:bytebankwebapi/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 

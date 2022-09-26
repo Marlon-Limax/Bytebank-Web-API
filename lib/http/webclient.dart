@@ -27,12 +27,15 @@ class LoggingInterceptor implements InterceptorContract {
   }
 
   Future<List<Transaction>> findAll() async {
+    final List<Transaction> transactions = [];
     try {
       final Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
       // ignore: unused_local_variable
-      final Response response = await client.get(Uri.parse('http://192.168.15.76:8080/transactions'));
+      final Response response = await client.get(Uri.parse('http://192.168.15.76:8080/transactions')).timeout(
+            const Duration(seconds: 5),
+          );
       final List<dynamic> decodedJson = jsonDecode(response.body);
-      final List<Transaction> transactions = [];
+
       for (Map<String, dynamic> transactionJson in decodedJson) {
         final Map<String, dynamic> contactJson = transactionJson['contact'];
         final Transaction transaction = Transaction(
@@ -48,7 +51,7 @@ class LoggingInterceptor implements InterceptorContract {
       return transactions;
     } catch (error) {
       debugPrint(error.toString());
-      rethrow;
+      return transactions;
     }
   }
 }
