@@ -1,3 +1,4 @@
+import 'package:bytebankwebapi/components/progress.dart';
 import 'package:bytebankwebapi/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
@@ -22,23 +23,13 @@ class _ContactListState extends State<ContactList> {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
-        future: Future.delayed(const Duration(seconds: 1))
-            .then((value) => _dao.findAll()),
+        future: Future.delayed(const Duration(seconds: 1)).then((value) => _dao.findAll()),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(),
-                    Text('loading'),
-                  ],
-                ),
-              );
+              return Progress();
               // ignore: dead_code
               break;
             case ConnectionState.active:
