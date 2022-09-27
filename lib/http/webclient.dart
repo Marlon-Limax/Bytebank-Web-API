@@ -7,7 +7,9 @@ import 'package:http_interceptor/http_interceptor.dart';
 
 import '../models/transaction.dart';
 
-class LoggingInterceptor implements InterceptorContract {
+class WebClient implements InterceptorContract {
+  Client client = Client();
+  
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
     debugPrint('Request');
@@ -26,10 +28,12 @@ class LoggingInterceptor implements InterceptorContract {
     return data;
   }
 
+  
+
   Future<List<Transaction>> findAll() async {
     final List<Transaction> transactions = [];
     try {
-      final Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+      client = InterceptedClient.build(interceptors: [WebClient()]);
       // ignore: unused_local_variable
       final Response response = await client.get(Uri.parse('http://192.168.15.76:8080/transactions')).timeout(
             const Duration(seconds: 5),
@@ -53,5 +57,29 @@ class LoggingInterceptor implements InterceptorContract {
       debugPrint(error.toString());
       return transactions;
     }
+  }
+
+  Future<Transaction> save(Transaction transaction) async {
+    client = InterceptedClient.build(interceptors: [WebClient()]);
+    final Map<String, dynamic> transactionMap = {
+      'value': transaction.value,
+      'contact': {'name': transaction.contact.name, 'accountNumber': transaction.contact.accountNumber}
+    };
+
+    final String transactionJson = jsonEncode(transactionMap);
+
+    final Response response = await client.post(Uri.parse('http://192.168.15.76:8080/transactions'),
+        headers: {'Content-type': 'application/json', 'password': '1000'}, body: transactionJson);
+
+    Map<String, dynamic> json = jsonDecode(response.body);
+    final Map<String, dynamic> contactJson = json['contact'];
+    return Transaction(
+      json['value'],
+      Contact(
+        0,
+        contactJson['name'],
+        contactJson['accountNumber'],
+      ),
+    );
   }
 }

@@ -10,7 +10,7 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoggingInterceptor loggingInterceptor = LoggingInterceptor();
+    WebClient loggingInterceptor = WebClient();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transactions'),
